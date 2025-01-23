@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XML-files</title>
+
+  <link rel="stylesheet" href="./style/style.css" />
+  <link rel="icon" href="./style/folders/Icon.png" type="image/x-icon">
+  <script src="./script.js" defer></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a onclick="showSection('whyINeedToUse')">Por Que Usar?</a>
+      <a onclick="showSection('howToInterprate')">Interpretação</a>
+      <a onclick="showSection('creationAndMaintenance')">Criação / Manutenção</a>
+      <a href="https://g8controls.marcopolo.com.br/" target="_blank">Portal</a>
+    </nav>
+  </header>
+
+  <!-- *********************************************************************************** -->
+  <main>
+    <section id="welcoming">
+      <div id="cotent">
+        <h1>Introdução à criação de arquivos .XML</h1>
+        <p>
+          Neste documento, exploraremos como criar arquivos .XML utilizando a CU50 e discutiremos as razões
+          pelas quais os arquivos .XML são utilizados nos setores de Engenharia Elétrica e Engenharia de Conceituação.
+        </p>
+    </section>
+
+    <!-- *********************************************************************************** -->
+    <section id="whyINeedToUse" >
+      <h2>
+        Nodelist padrão.
+      </h2>
+      <p>
+        O principal objetivo de utilizarmos arquivos com extensão .XML é para que seja possivel padronizar os opcionais
+        que serão utilizados na carroceria, dando nomes a cada pino de cada módulo, e assim, facilitando a identificação
+        de cada um deles e definindo um padão a ser seguido.
+      </p>
+      <p>
+        Cada módulo terá um nome, como: MM1A, MM1B, MM2A e assim por diante, "MM" significa módulo multplex, o número
+        sequente significa a posição, no caso dos Paradiso G8 DD, MM1A ou MM1B estão na central superior lado esquerdo.
+        já a ultima letra, é para diferenciar dois módulos que estão na mesma central.
+      </p>
+      <table>
+        <tr>
+          <td>Opcionais</td>
+          <td>Módulo</td>
+          <td>Conector</td>
+          <td>Pino</td>
+        </tr>
+        <tr>
+          <td>Farol de Milha</td>
+          <td>MM1A</td>
+          <td>Conector 1</td>
+          <td>Pino 1</td>
+        </tr>
+        <tr>
+          <td>Farol de Neblina</td>
+          <td>MM1A</td>
+          <td>Conector 1</td>
+          <td>Pino 2</td>
+        </tr>
+      </table>
+
+      <h3>Criação de arquivos</h3>
+      <p>
+        Quando utilizamos arquivos .XML para determinar quais opcionais serão habilitados e seus respectivos pinos,
+        não se faz mais necessário a criação de um nodelist especifico para cada carro. <br>
+        O SAP faz o arquivo de forma automática quando bem configurado, sendo necessário apenas carregar o mesmo ao portal.
+      </p>
+      <img src="./style/folders/Portal_do_fornecedor.png" alt="Imagem que representa os arquivos carregados ao portal do fornecedor">
+    </section>
+
+    <!-- *********************************************************************************** -->
+    <section id="howToInterprate" class="active">
+      <h1>Estrutura</h1>
+      <p>
+        A estrutura de um arquivo .XML é composta por tags, que são delimitadas por
+        "<" e ">", por exemplo.: <br>
+          <div id="xmlStructure">
+            <span class="tag">
+              < name>
+            </span>MM1A <span class="tag">
+              < name>
+            </span>
+          </div>
+
+      </p>
+      <p>
+        Entre os símbolos "<" e ">", temos o nome da tag, < logic> e seu encerramento < /logic>. <br>
+        Entre as tags, temos o conteudo da tag: < logic>XXXXXXXX< /logic> <br>
+
+      </p>
+
+      <p>
+        Ao utilizarmos uma tag dentro da outra, estamos representando um agrupamento de tags, por exemplo.: <br>
+      </p>
+
+      <div id="xmlStructure">
+        <p>
+          <span class="tag">
+            < MUX>
+          </span><br>
+          <span class="tag">....< Name></span>MM1A <span class="tag">
+            < name>
+          </span> <br><br>
+          <span class="tag">....< PIN_SET></span><br>
+          <span class="tag">........< CN></span>1 <span class="tag">
+            < CN>
+          </span> <br>
+          <span class="tag">........< PN></span>1 <span class="tag">
+            < PN>
+          </span> <br>
+          <span class="tag">........< LOAD></span>10,50A <span class="tag">
+            < LOAD>
+          </span> <br>
+          <span class="tag">........< LOGIC></span>XXXXXXXX <span class="tag">
+            < LOGIC>
+          </span> <br>
+          <span class="tag">........< NAME></span>UD_USB <span class="tag">
+            < NAME>
+          </span><br>
+
+          <span class="tag">....< PIN_SET></span> <br><br>
+          <span class="tag">
+            < MUX />
+          </span><br>
+        </p>
+      </div>
+      <p>
+        O caso demonstrado acima, representa a estrutura de um arquivo .XML
+        <br><br>
+      </p>
+
+      <p>
+      <ul><span class="tag"> MUX</span></ul>
+      Representa o inicio e fim módulo multiplex MM1A.
+
+      <ul><span class="tag"> PIN_SET</span></ul>
+      Representa o inicio e fim das informações pertencentes a um pino.
+
+      <ul><span class="tag"> CN</span></ul>
+      Representa o pino do conector.
+
+      <ul><span class="tag"> PN</span></ul>
+      Representa o conector do pino.
+
+      </p>
+
+      <h2>
+        Informações do Pino
+      </h2>
+      <p>
+        As informações como Load, logic e name, são informações que dirão como o pino irá se comportar.
+
+      <ul><span class="tag"> LOAD</span></ul>
+      Corrente que o pino ira enviar ou receber <br>
+
+      <ul><span class="tag"> LOGIC</span></ul>
+      Determina como o pino ira se comportar <br>
+      O mesmo é representado por um código SAP, que pode ser aberto para uma melhor compreensão <br>
+
+      <ul><span class="tag"> NAME</span></ul>
+      Representa o nome único do pino,
+
+      </p>
+
+
+    </section>
+
+    <!-- *********************************************************************************** -->
+    <section id="creationAndMaintenance">
+      <h1>Criação de arquivos .XML via SAP</h1>
+      <div id="content">
+        <h2>
+          Material e Classe
+        </h2>
+        <p>
+          Todo material que criamos no sistema SAP recebe código único, além de outras informações como nome, peso,
+          centro de uso e outros.
+          Após a criação do material, atribuímos uma Classe ao material, por exemplo: CP6619M21001 ( Nodelist multplex
+          ).</p>
+        <p>
+          A classe é responsável por definir as informações do material, como: Peso, Altura, Largura, Comprimento, entre
+          outros utilizando "variáveis", todo material nesta classe recebe as mesmas caracterisitcas. <br>
+          No caso da classe CP6619M21001, temos as seguintes variaveis: <br>
+        </p>
+        <table>
+          <tr>
+            <td> Var</td>
+            <td> Name</td>
+          </tr>
+          <tr>
+            <td>F236</td>
+            <td>Nomenclatura do módulo</td>
+          </tr>
+          <tr>
+            <td>C645</td>
+            <td>fabricante</td>
+          </tr>
+          <tr>
+            <td>F586</td>
+            <td>Código MP módulo</td>
+          </tr>
+          <tr>
+            <td>F247</td>
+            <td>Corrente Total do módulo</td>
+          </tr>
+          <tr>
+            <td>F066</td>
+            <td>CN1:1</td>
+          </tr>
+          <tr>
+            <td>F067</td>
+            <td>CN1:2</td>
+          </tr>
+          <tr>
+            <td>F068</td>
+            <td>CN1:3</td>
+          </tr>
+          <tr>
+            <td>F069</td>
+            <td>CN1:4</td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+        </table>
+        <p>
+          A construção dos arquivos .XML é feita utilizando as características presentes na classe CP6619M21001.
+          Qualquer
+          outra característica adicionada posteriormente à classe, não será exibida, a menos que seja devidamente
+          configurada.
+        </p>
+
+        <h2>
+          Construção
+        </h2>
+        <p>
+          Para a estrutura dos arquivos .XML, precisaremos de um Agrupador único para cada carroceria ou
+          ZFES. Como por exemplo:
+        </p>
+        <table>
+          <tr>
+            <td>Paradiso DD</td>
+            <td>R8P2_logicas</td>
+          </tr>
+          <tr>
+            <td>Paradiso SD</td>
+            <td>R8P0_logicas</td>
+          </tr>
+        </table>
+        <p>
+          Este agrupador em questão será responsável única e exclusivamente por agrupar os códigos responsáveis pela
+          criação do .XML de cada ZFES.<br>
+          Não é correto utilizar mais de um agrupador para a geração dos arquivos .XML de uma carroceria, da mesma forma
+          como não é interessante utilizá-lo para determinadas montagens ou componentes.
+        </p>
+
+        <img src="./style/folders/CU50image.jpg"
+          alt="Representação do agrupador R8P2_LOGICAS dentro do agrupador R8P2_ELE_PN_HI">
+
+        <p>
+          Com o agrupador criado, iremos utilizar os itens abaixo como itens filhos do agrupador da seguinte
+          maneira<br />
+          <span id="obs">
+            Lembrando que os códigos destacados na lista abaixo não geram ordens de compra para o fornecedor, portanto,
+            não devem ser utilizados em lista técnica.
+          </span>
+        </p>
+        <table>
+          <tr>
+            <td colspan="2">Materiais instanciaveis e configuraveis</td>
+          </tr>
+          <tr>
+            <td>12691044</td>
+            <td>INFORMAÇÔES ADICIONAIS</td>
+          </tr>
+          <tr>
+            <td>12008320</td>
+            <td>MIO1320</td>
+          </tr>
+          <tr>
+            <td>13013744</td>
+            <td>MIO0916</td>
+          </tr>
+          <tr>
+            <td>12008373</td>
+            <td>MIO0717</td>
+          </tr>
+          <tr>
+            <td>12008317</td>
+            <td>MIO0710</td>
+          </tr>
+          <tr>
+            <td>13006968</td>
+            <td>MIO0808</td>
+          </tr>
+          <tr>
+            <td>11964029</td>
+            <td>HU10" / Visio4</td>
+          </tr>
+          <tr>
+            <td>13003523</td>
+            <td>ICON12P</td>
+          </tr>
+        </table>
+        <p>
+          Os itens acima são marcados como instanciáveis e configuraveis, não tem nenhuma das variaveis
+          "características"
+          respondidas na MM02, portanto, não podem ser adicionados ao agrupador pela classe (CTL = K). Para
+          adicionar
+          o material que deseja deve utilizar o CTL = L, e então utilizar o material como lista tecnica, desta forma, o
+          mesmo será exibido na geração da CU50.
+        </p>
+        <img src="./style/folders/CS02_IMAGE.png" alt="Imagem que destaca a lista do agrupador criado">
+
+        <!-- Configuração dos aateriais -->
+        <h2>Configuração</h2>
+        <p>
+          Após a adição dos material ao agrupador, basta configurar cada uma das características do material, da mesma
+          forma como é feito na configuração de um Nó de classe, para que
+          sejam respondidas de acordo com sua necessidade.
+        </p>
+
+        <div id="ABAP-Struture">
+          <h3>
+            Preenchimento das principais características do modulo.
+          </h3>
+          <p>
+            <span id="ABAP-Coment">
+              ************************************************************************<br>
+              *------------- PREENCHIMENTO DAS CARACTERISTICAS DO MÓDULO ------------*<br>
+              ************************************************************************<br>
+              *F236 - NOMENCLATURA MÓDULO MULTPLEX<br>
+            </span>
+            $SELF.F236 = '...',<br>
+            <br>
+            <span id="ABAP-Coment">
+              *C645 - FABRICANTE<br>
+            </span>
+            $SELF.C645 = '...',<br>
+            <br>
+            <span id="ABAP-Coment">
+              *F586 - CÕDIGO MP MÓDULO MULTPLEX<br>
+            </span>
+            $SELF.F586 = ...,<br>
+            <br>
+            <span id="ABAP-Coment">
+              *F247 - CORRENTE TOTAL DO MÓDULO MULTPLEX<br>
+            </span>
+            $SELF.F247 = 0,<br>
+            <br>
+            <span id="ABAP-Coment">
+              ************************************************************************
+            </span>
+          </p>
+        </div>
+
+        <p>
+          <br>
+          Após o Preenchimento das informações do módulo, começaremos o preenchimento das características que
+          representam os pinos.<br>
+          <span id="obs">
+            Não é necessário separar em duas regras diferentes, podemos utilizar apenas uma regra de procedencia.
+          </span>
+        </p>
+        <p>
+          Para a resposta de cada pino, deve ser seguido o seguinte padrão: <br>
+        </p>
+        <table>
+          <tr>
+            <td colspan="3">Caso uma saída</td>
+          </tr>
+          <tr>
+            <td>00.00A</td>
+            <td>lógica</td>
+            <td>nome do pino</td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td colspan="3">Caso uma entrada</td>
+          </tr>
+          <tr>
+            <td>TSIN</td>
+            <td>lógica</td>
+            <td>nome do pino</td>
+          </tr>
+        </table>
+        <p>
+          <br>
+          Onde: <br>
+        <ul>
+          <li>00.00A - Corrente que o pino ira enviar</li>
+          <li>lógica - Código SAP que determina como o pino ira se comportar</li>
+          <li>nome do pino - Nome unico do pino</li>
+        </ul>
+        </p>
+        <p>
+          Quando utilizamos o "$SELF.F066" para respondermos uma característica será necessário adicionar essas três
+          informações, mas para isso, teremos de adicionar o caractere "|" entre cada resposta, por exemplo: <br>
+
+          $SELF.F066 = '1,00A|12924013|DRL' IF $ROOT.C902 = 'TEM_SEM_TECLA',
+        </p>
+        <div id="ABAP-Struture">
+          <h3>Preenchimento dos pinos</h3>
+          <p>
+            <span id="ABAP-Coment">
+              ************************************************************************<br>
+              *CN1:01 - DRL<br>
+            </span>
+            $SELF.F066 = 'NAO_TEM',<br>
+            <br>
+            <span id="ABAP-Coment">
+              *----------------------------------------------------------------------*<br>
+              *ENTRADA<br>
+              *( C902 ) - Farol diurno<br>
+            </span>
+            $SELF.F066 = '1,00A|12924013|DRL' IF<br>
+            $ROOT.C902 = 'TEM_SEM_TECLA',<br>
+            <br>
+            <span id="ABAP-Coment">
+              *----------------------------------------------------------------------*<br>
+              *CONDIÇÃO DE ERRO<br>
+              *( C902 ) - Farol diurno<br>
+            </span>
+            $ROOT.C902 <> 'TEM_SEM_TECLA',<br>
+              <br>
+              <span id="ABAP-Coment">
+                *----------------------------------------------------------------------*<br>
+                *SOMA DE CARGA<br>
+              </span>
+              $SELF.F247 = $SELF.F247 + 1.00 IF<br>
+              $SELF.F066 = '1,00A|12924013|DRL',<br>
+              <br>
+              <span id="ABAP-Coment">
+                ************************************************************************<br>
+              </span>
+          </p>
+        </div>
+
+        <h4>Condição de erro</h4>
+        <p>
+          A condição de erro é muitas vezes utilizada para detectar quando há um situação nova na configuração
+          do veículo. <br>
+          Por exemplo, se o veiculo não possuir um farol de milha sem tecla, a condição de erro será acionada, e a
+          caracteristica F066 será respondida igual a "", ou seja nada, e a ausencia de uma resposta causará
+          inconsistencia no material.
+        </p>
+
+        <h4>Soma de carga</h4>
+        <p>
+          Nas características principais do módulo, teremos uma que representa a corrente total do módulo, e para que
+          esse calculo seja feito, é necessário fazer uma soma de todos os pinos habilitados, como no exemplo abaixo.
+        </p>
+        <div id="ABAP-Struture">
+          $SELF.F247 = $SELF.F247 + 1.00 IF<br>
+          $SELF.F066 = '1,00A|12924013|DRL',
+        </div>
+
+        <h4>Resultado</h4>
+        <p>
+          Após configurar o material dentro da CS02 e adicionar a regra, ao gerar a CU50 da ordem de venda desejada
+          será obtido um resultado próximo ao seguinte: <br>
+        </p>
+        <img src="./style/folders/CONFIGURATION_IMAGE.png" alt="Imagem da configuração do material e uma CU50">
+      </div>
+
+      <h2>Configurar geração do ZFES</h2>
+      <p>
+        Agora, para que seja possível gerar os arquivos .XML com base no agrupador, será necessário adicionar o ZFES a
+        uma lista presente na tranzação: ZPP376. <br>
+        Aqui, será nescessario adicionar o ZFES, código do fornecedor, contador, agrupador e a data de validade.
+      <ul>
+        <li>ZFES - Agrupador da estutura do carro </li>
+        <li>Fornecedor - Código do cliente para a busca no portal </li>
+        <li>Contador - Deve estar sempre igual a 1</li>
+        <li>Agrupador - O agrupador recem criado para este trabalho</li>
+        <li>Validade - Preenchida com a data atual, até 31.12.2999</li>
+      </ul>
+      </p>
+
+      <table>
+        <tr>
+          <td colspan="2">Códigos de fornecedor</td>
+        </tr>
+        <tr>
+          <td>Código</td>
+          <td>Fornecedor</td>
+        </tr>
+        <tr>
+          <td>300789</td>
+          <td>Actia</td>
+        </tr>
+        <tr>
+          <td>300500</td>
+          <td>LOHR</td>
+        </tr>
+      </table>
+      <br>
+      <img src="./style/folders/ZPP376.png" alt="Imagem que demonstra a estrutura da transação SAP ZPP376">
+
+      <h3>Geração do arquivo</h3>
+      <p>
+        Agora que todos os passos foram preenchidos, será necessário fazer apenas alguns ultimos passos. <br><br>
+
+        1. Gerar os instanciaveis <br>
+        2. Esperar que seja dado o status de PF ao projeto <br>
+        3. Gerar a transação ZPP378 para carregar o arquivo .XML. <br>
+      </p>
+      <img src="./style/folders/ZPP378.png" alt="transação ZPP378">
+      <br>
+    </section>
+  </main>
+
+  <footer>
+    <p>Created by lucaslip &copy; 01.2025</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
